@@ -129,4 +129,15 @@ body {
   background-color: #3E5E93;
   color: #fff;
   text-align: center;
+  font-size: 20px;
+}
+
+.footer-content {
+  font-size: 26px;
+}
+
+@media (max-width: 720px) {
+  .footer-content {
+    font-size: 18px;
+  }
 }

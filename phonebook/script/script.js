@@ -83,8 +83,6 @@ const data = [
     const createFooter = () => {
     const footer = document.createElement('footer');
     footer.classList.add('footer');
-    // footer.textContent = `Все права защищены ${title}`;
-
     const footerContainer = createContainer();
     footer.append(footerContainer);
 
@@ -94,11 +92,11 @@ const data = [
   };
 
   const createFooterContent = title => {
-    const h2 = document.createElement('h2');
-    // h1.classList.add('logo');
-    h2.textContent = `Все права защищены  ©${title}`;
+    const footerContent = document.createElement('div');
+    footerContent.classList.add('footer-content');
+    footerContent.textContent = `Все права защищены  ©${title}`;
 
-    return h2;
+    return footerContent;
   };
 
   const createTable = () => {
