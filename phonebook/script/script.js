@@ -52,7 +52,7 @@ const data = [
 
   const createMain = () => {
     const main = document.createElement('main');
-    
+
     const mainContainer = createContainer();
     main.append(mainContainer);
     main.mainContainer = mainContainer;
@@ -80,7 +80,7 @@ const data = [
     };
   };
 
-    const createFooter = () => {
+  const createFooter = () => {
     const footer = document.createElement('footer');
     footer.classList.add('footer');
     const footerContainer = createContainer();
@@ -132,15 +132,18 @@ const data = [
       <h2 class="form-title">Добавить контакт</h2>
       <div>
         <label class="form-label" for="name">Имя:</label>
-        <input class="form-input" name="name" id="name" type="text" required>
+        <input class="form-input"
+          name="name" id="name" type="text" required>
       </div>
       <div>
         <label class="form-label" for="surname">Фамилия:</label>
-        <input class="form-input" name="surname" id="surname" type="text" required>
+        <input class="form-input"
+          name="surname" id="surname" type="text" required>
       </div>
       <div>
         <label class="form-label" for="phone">Телефон:</label>
-        <input class="form-input" name="phone" id="phone" type="number" required>
+        <input class="form-input"
+          name="phone" id="phone" type="number" required>
       </div>
     `);
 
@@ -187,7 +190,6 @@ const data = [
     const form = createForm();
     const footer = createFooter();
     const footerContent = createFooterContent(title);
-    const btnCloseForm = document.querySelector('.close');
 
     header.headerContainer.append(logo);
     main.mainContainer.append(buttonGroup.btnWrapper, table, form.overlay);
@@ -204,7 +206,6 @@ const data = [
   };
 
   const createRow = ({name: firstName, surname, phone}) => {
-
     const tr = document.createElement('tr');
 
     const tdDel = document.createElement('td');
@@ -226,12 +227,14 @@ const data = [
     tr.phoneLink = phoneLink;
     tdPhone.append(phoneLink);
 
-    tr.append(tdDel, tdName, tdSurname, tdPhone);
+    const tdEdit = document.createElement('td');
+    const buttonEdit = document.createElement('button');
+    buttonEdit.classList.add('table-btn', 'btn-edit');
+    tdEdit.append(buttonEdit);
 
-
+    tr.append(tdDel, tdName, tdSurname, tdPhone, tdEdit);
 
     return tr;
-
   };
 
   const renderContacts = (elem, data) => {
@@ -246,11 +249,10 @@ const data = [
       contact.addEventListener('mouseenter', () => {
         logo.textContent = contact.phoneLink.textContent;
       });
-      
+
       contact.addEventListener('mouseleave', () => {
         logo.textContent = text;
       });
-      
     });
   };
 
@@ -284,7 +286,6 @@ const data = [
     formOverlay.addEventListener('click', () => {
       formOverlay.classList.remove('is-visible');
     });
-
   };
 
   window.phoneBookInit = init;
