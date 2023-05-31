@@ -129,6 +129,13 @@ body {
   background-image: url("../img/del.svg");
 }
 
+.name,
+.surname {
+  cursor: pointer;
+}
+
+.name:hover,
+.surname:hover,
 .del-icon:hover,
 .close:hover {
   opacity: 0.7;

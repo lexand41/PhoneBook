@@ -107,8 +107,8 @@ const data = [
     thead.insertAdjacentHTML('beforeend', `
       <tr>
         <th class="delete">Удалить</th>
-        <th>Имя</th>
-        <th>Фамилия</th>
+        <th class="name">Имя</th>
+        <th class="surname">Фамилия</th>
         <th>Телефон</th>
       </tr>  
     `);
@@ -301,15 +301,26 @@ const data = [
       }
     });
 
-    setTimeout(() => {
-      const contact = createRow({
-        name: 'Александр',
-        surname: 'Синяков',
-        phone: '+79139933695',
-      });
+    const contacts = document.querySelector('table');
 
-      list.append(contact);
-    }, 2000);
+    const sortByName = (a) => {
+      const sortedRows = Array.from(contacts.rows)
+          .slice(1)
+          .sort((rowA, rowB) =>
+            (rowA.cells[a].innerHTML > rowB.cells[a].innerHTML ? 1 : -1));
+
+      contacts.tBodies[0].append(...sortedRows);
+    };
+
+    const surNameByAlfabet = document.querySelector('.surname');
+    surNameByAlfabet.addEventListener('click', () => {
+      sortByName(2);
+    });
+
+    const nameByAlfabet = document.querySelector('.name');
+    nameByAlfabet.addEventListener('click', () => {
+      sortByName(1);
+    });
   };
 
   window.phoneBookInit = init;
