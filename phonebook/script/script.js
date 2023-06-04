@@ -39,7 +39,7 @@
 
   const removeStorage = (tel) => {
     const newDatatDel = newData.filter(contact => !(contact.phone === tel));
-    localStorage.setItem('data', JSON.stringify(newDatatDel));
+    setStorage('data', newDatatDel);
     location.reload();
   };
 
@@ -371,7 +371,6 @@
           .slice(1).sort((rowA, rowB) =>
             (rowA.cells[a].innerHTML > rowB.cells[a].innerHTML ? 1 : -1));
 
-      console.log(sortedRows);
       contacts.tBodies[0].append(...sortedRows);
     };
 
