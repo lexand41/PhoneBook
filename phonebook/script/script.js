@@ -1,33 +1,53 @@
 'use strict';
 
-const data = [
-  {
-    name: 'Иван',
-    surname: 'Петров',
-    phone: '+79514545454',
-  },
-  {
-    name: 'Игорь',
-    surname: 'Семёнов',
-    phone: '+79999999999',
-  },
-  {
-    name: 'Семён',
-    surname: 'Иванов',
-    phone: '+79800252525',
-  },
-  {
-    name: 'Мария',
-    surname: 'Попова',
-    phone: '+79876543210',
-  },
-];
+// const data = [
+//   {
+//     name: 'Иван',
+//     surname: 'Петров',
+//     phone: '+79514545454',
+//   },
+//   {
+//     name: 'Игорь',
+//     surname: 'Семёнов',
+//     phone: '+79999999999',
+//   },
+//   {
+//     name: 'Семён',
+//     surname: 'Иванов',
+//     phone: '+79800252525',
+//   },
+//   {
+//     name: 'Мария',
+//     surname: 'Попова',
+//     phone: '+79876543210',
+//   },
+// ];
+
+// localStorage.setItem('data', JSON.stringify(data));
+
 
 {
+  // localStorage.clear();
+
+  const getStorage = (key) => JSON.parse(localStorage.getItem(key)) || [];
+
+  const setStorage = (key, object) =>
+    localStorage.setItem(key, JSON.stringify(object));
+
+  const data = 'data';
+  const newData = getStorage(data);
+
+  const removeStorage = (tel) => {
+    const newDatatDel = newData.filter(contact => !(contact.phone === tel));
+    localStorage.setItem('data', JSON.stringify(newDatatDel));
+    location.reload();
+  };
+
   const addContactData = (contact) => {
-    data.push(contact);
-    console.log('data', data);
-  }
+    newData.push(contact);
+
+    setStorage(data, newData);
+  };
 
   const createContainer = () => {
     const container = document.createElement('div');
@@ -190,6 +210,11 @@ const data = [
         type: 'button',
         text: 'Удалить',
       },
+      {
+        className: 'btn btn-danger btnVar',
+        type: 'button',
+        text: 'Удалить по номеру телeфона',
+      },
     ]);
     const table = createTable();
     const {form, overlay} = createForm();
@@ -244,8 +269,8 @@ const data = [
     return tr;
   };
 
-  const renderContacts = (elem, data) => {
-    const allRow = data.map(createRow);
+  const renderContacts = (elem, newData) => {
+    const allRow = newData.map(createRow);
     elem.append(...allRow);
     return allRow;
   };
@@ -330,32 +355,47 @@ const data = [
 
     // Функционал
 
-    const allRow = renderContacts(list, data);
+    const allRow = renderContacts(list, newData);
     const {closeModal} = modalControl(btnAdd, formOverlay);
 
     hoverRow(allRow, logo);
     deleteControl(btnDel, list);
     formControl(form, list, closeModal);
 
+    // Сортировка имени и фамилии, по алфавиту.
+
     const contacts = document.querySelector('table');
 
     const sortByName = (a) => {
       const sortedRows = Array.from(contacts.rows)
-          .slice(1)
-          .sort((rowA, rowB) =>
+          .slice(1).sort((rowA, rowB) =>
             (rowA.cells[a].innerHTML > rowB.cells[a].innerHTML ? 1 : -1));
 
+      console.log(sortedRows);
       contacts.tBodies[0].append(...sortedRows);
     };
 
     const surNameByAlfabet = document.querySelector('.surname');
     surNameByAlfabet.addEventListener('click', () => {
+      localStorage.setItem('num', 2);
       sortByName(2);
     });
 
     const nameByAlfabet = document.querySelector('.name');
     nameByAlfabet.addEventListener('click', () => {
+      localStorage.setItem('num', 1);
       sortByName(1);
+    });
+
+    const num = localStorage.getItem('num');
+    sortByName(num);
+
+    // Удаление контакта, по номеру телефона.
+
+    const btnNumTel = document.querySelector('.btnVar');
+    btnNumTel.addEventListener('click', () => {
+      const numTel = prompt('Введите номер телефона');
+      removeStorage(numTel);
     });
   };
 
