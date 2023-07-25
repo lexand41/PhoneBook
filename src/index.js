@@ -1,6 +1,10 @@
-import control from './modules/control.js';
-import * as render from './modules/render.js';
-import {getStorage} from './modules/serviceStorage.js';
+import control from './script/control';
+import * as render from './script/render';
+import {getStorage} from './script/serviceStorage';
+
+import './index.html';
+
+import './scss/index.scss';
 
 const {
   hoverRow,
@@ -41,5 +45,5 @@ const {
     delContactPhone();
   };
 
-  window.phoneBookInit = init;
+  init('#app', 'Александр');
 }
